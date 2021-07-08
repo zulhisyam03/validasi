@@ -9,7 +9,7 @@
     $data_log= mysqli_fetch_array($cek_log);
     if (!empty($data_log)) {
       # code...
-      echo "<script>location.href='../../index.html';</script>";
+      echo "<script>location.href='../../index.php';</script>";
     }
   }
 ?>
@@ -22,6 +22,33 @@
 <link rel="stylesheet" href="./style.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
 <style type="text/css">
+  blink {
+    -webkit-animation: 2s linear infinite kedip; /* for Safari 4.0 - 8.0 */
+    animation: 2s linear infinite kedip;
+  }
+  /* for Safari 4.0 - 8.0 */
+  @-webkit-keyframes kedip { 
+    100% {
+      visibility: hidden;
+    }
+    50% {
+      visibility: hidden;
+    }
+    0% {
+      visibility: visible;
+    }
+  }
+  @keyframes kedip {
+    100% {
+      visibility: hidden;
+    }
+    50% {
+      visibility: hidden;
+    }
+    0% {
+      visibility: visible;
+    }
+  }
   h1{
     margin-top: -10px;
   }
@@ -35,6 +62,15 @@
   img{
     width: 300px;
     height: 200px;
+  }
+  .warning{
+    top: 0;
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+    background-color: red;
+    color: whitesmoke;
+    position: fixed;
   }
 </style>
 </head>
@@ -58,17 +94,28 @@
 
         $_SESSION['user_nim']   = $nim_reg;
         $_SESSION['user_pass']  = $pass_reg;
-        $_SESSION['user_email'] = $email_reg;
       }
       else{
-        echo "<script>alert('Maaf, NIM sudah terdaftar');window.location='index.php';</script>";
+        echo "<div class='warning'><blink>Maaf, NIM Sudah Terdaftar !!!</blink></div>";
       }      
     }
     else if(isset($_POST['login'])){
       $nim_log  = $_POST['nama_log'];
       $pass_log = $_POST['pass_log'];
 
-      echo "NIM ".$nim_log;
+      $q_login = mysqli_query($db,"SELECT * FROM biodata WHERE nim='$nim_log' and password='$pass_log'");
+      $d_login = mysqli_fetch_array($q_login);
+
+      if (empty($d_login)) {
+        # code...
+        echo "<div class='warning'><blink>NIM atau PASSWORD Salah !!!<blink></div>";
+      }
+      else {
+        # code...
+        $_SESSION['user_nim']  = $d_login['nim'];
+        $_SESSION['user_pass'] = $d_login['password'];
+        echo "<script>alert(\"Selamat Datang ".$d_login['nama']."\");window.location=\"../../\";</script>";
+      }
     }
   ?>
   <!-- END DAFTAR -->
