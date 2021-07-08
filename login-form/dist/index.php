@@ -1,3 +1,18 @@
+<?php
+  session_start();
+  include "../../connect.php";
+
+  if((!empty($_SESSION['user_nim']) and (!empty($_SESSION['user_pass'])))){
+    $un      = $_SESSION['user_nim'];
+    $up      = $_SESSION['user_pass'];
+    $cek_log = mysqli_query($db,"SELECT * FROM biodata WHERE nim='$un' and password='$up'");
+    $data_log= mysqli_fetch_array($cek_log);
+    if (!empty($data_log)) {
+      # code...
+      echo "<script>location.href='../../index.html';</script>";
+    }
+  }
+?>
 <!DOCTYPE html>
 <html lang="en" >
 <head>
@@ -24,6 +39,39 @@
 </style>
 </head>
 <body>
+  <!-- PROSES DAFTAR dan LOGIN -->
+  <?php
+    if(isset($_POST['daftar'])){
+      $nama_reg  = $_POST['nama_reg'];
+      $nim_reg   = $_POST['nim_reg'];
+      $email_reg = $_POST['email_reg'];
+      $pass_reg  = $_POST['pass_reg'];
+      $hp_reg    = $_POST['hp_reg'];
+
+      // Cek Ketersediaan NIM
+      $q_cek = mysqli_query($db, "SELECT * FROM biodata WHERE nim='$nim_reg'");
+      $d_cek = mysqli_num_rows($q_cek);
+
+      if(empty($d_cek)){
+        $q_reg  = mysqli_query($db,"INSERT INTO biodata VALUE ('$nama_reg','$nim_reg','$email_reg','$hp_reg','$pass_reg')");
+        echo "<script>alert('Selamat, Anda Sukses Mendaftarkan Akun ...');window.location='../../index.html';</script>";
+
+        $_SESSION['user_nim']   = $nim_reg;
+        $_SESSION['user_pass']  = $pass_reg;
+        $_SESSION['user_email'] = $email_reg;
+      }
+      else{
+        echo "<script>alert('Maaf, NIM sudah terdaftar');window.location='index.php';</script>";
+      }      
+    }
+    else if(isset($_POST['login'])){
+      $nim_log  = $_POST['nama_log'];
+      $pass_log = $_POST['pass_log'];
+
+      echo "NIM ".$nim_log;
+    }
+  ?>
+  <!-- END DAFTAR -->
 <!-- partial:index.partial.html -->
 
   <?php
@@ -33,12 +81,13 @@
         <div class="login" style="top: 200px;">
           <center><img src="../untad.png" alt=""></center>
           <h1>Daftar</h1>
-          <form method="post" name="regis" action="regist.php">
+          <form method="post" name="regis" action="">
             <input type="text" name="nama_reg" placeholder="Nama Lengkap" required="required" />
             <input type="text" name="nim_reg" placeholder="NIM" required="required">
-            <input type="text" name="email_reg" placeholder="E-Mail">
+            <input type="text" name="email_reg" placeholder="E-Mail" required="required">
+            <input type="text" name="hp_reg" placeholder="Nomor Handphone" required="required" onkeyup="this.value=this.value.replace(/[^\d]/,'')">
             <input type="password" name="pass_reg" placeholder="Password" required="required" />
-            <button type="submit" class="btn btn-primary btn-block btn-large">Daftar</button>
+            <button type="submit" name="daftar" class="btn btn-primary btn-block btn-large">Daftar</button>
           </form>
           <p></p>
           <h3>Sudah Punya Akun? <a href="../dist/">Login</a></h3>
@@ -51,9 +100,9 @@
           <center><img src="../untad.png" alt=""></center>
           <h1>Login</h1>
           <form method="post" name=login>
-            <input type="text" name="u" placeholder="Username" required="required" />
-              <input type="password" name="p" placeholder="Password" required="required" />
-              <button type="submit" class="btn btn-primary btn-block btn-large">Let me in.</button>
+            <input type="text" name="nama_log" placeholder="Username" required="required" />
+              <input type="password" name="pass_log" placeholder="Password" required="required" />
+              <button type="submit" name="login" class="btn btn-primary btn-block btn-large">Let me in.</button>
           </form>
           <p></p>
           <h3>Belum Punya Akun? <a href="?registrasi">Daftar</a></h3>
