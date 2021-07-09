@@ -129,7 +129,7 @@
             else {
                 # code...
                 unset($d_validasi['doc']);
-                $q_updateskripsi = mysqli_query($db, "UPDATE TABLE skrispi SET judul='$judul',p1='$p1',p2='$p2',nik1='$nik1',nik2='$nik2',doc='$path',type='$doc_type' WHERE nim='$un'");
+                $q_updateskripsi = mysqli_query($db, "UPDATE TABLE skrispi SET judul='$judul',p1='$p1',p2='$p2',nik1='$nik1',nik2='$nik2',doc='$path',type='$doc_type',tgl_upload=NOW() WHERE nim='$un'");
                 move_uploaded_file($path_asal,$path);
                 echo "<script>alert('Informasi Skripsi Telah Dirubah... ');window.location='../validasi/';</script>";
             }
