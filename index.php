@@ -30,7 +30,7 @@
     <title>FISIP UNTAD - Validasi Judul Skripsi</title>
     <link rel="shortcut icon" href="login-form/untad.png" type="image/x-icon">
     <link href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./style.css">
     <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css' rel='stylesheet'>
     <link href='https://use.fontawesome.com/releases/v5.8.1/css/all.css' rel='stylesheet'>
     <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
@@ -42,6 +42,29 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
     <style type="text/css">
+        .warning{
+            top: 0;
+            width: 100%;
+            padding: 10px;
+            text-align: center;
+            background-color: red;
+            color: whitesmoke;
+            position: fixed;
+        }
+        .caption{
+            padding-left: 25px;
+            text-transform:uppercase;
+        }
+        .keterangan{
+            width:100%;
+            padding:25px;
+            background:#f2f6fa;
+            border-radius:10px;
+        }
+        body {
+            overflow-x: hidden;
+            background: #1c8cee62;
+        }
         blink {
             -webkit-animation: 2s linear infinite kedip; /* for Safari 4.0 - 8.0 */
             animation: 2s linear infinite kedip;
@@ -75,6 +98,43 @@
 <?php
     $q_validasi = mysqli_query($db, "SELECT * FROM skripsi WHERE nim='$un'");
     $d_validasi = mysqli_fetch_array($q_validasi);
+
+    if (isset($_POST['simpan_skripsi'])) {
+        # code...
+        $judul  = $_POST['judul'];
+        $p1     = $_POST['p1'];
+        $p2     = $_POST['p2'];
+        $nik1   = $_POST['nik1'];
+        $nik2   = $_POST['nik2'];
+        $nm_doc = $_FILES["doc"]["name"];
+        $path_asal   = $_FILES["doc"]["tmp_name"];
+        $type        = explode(".",$nm_doc);
+        $doc_type    = $type[1];
+
+        //Set Direktori Menyimpan File Yang Di Upload
+        $path   = "document/".$judul.".".$doc_type;
+
+        if ($doc_type!="pdf") {
+            # code...
+            echo "<div class='warning' style='position:relative;margin-bottom: -30px;'><blink>File Sekarang -> ".$doc_type." File Skripsi Harus Bertipe PDF !!!</blink></div>";
+        }
+        else {
+            # code...
+            if (empty($d_validasi)) {
+                # code...
+                $q_saveskripsi = mysqli_query($db, "INSERT INTO skripsi VALUE('$un','$judul','$p1','$p2','$nik1','$nik2','$path','$doc_type',NOW(),'No')");
+                move_uploaded_file($path_asal,$path);
+                echo "<script>alert('Sukses Upload Skripsi ... ');window.location='../validasi/';</script>";
+            }
+            else {
+                # code...
+                unset($d_validasi['doc']);
+                $q_updateskripsi = mysqli_query($db, "UPDATE TABLE skrispi SET judul='$judul',p1='$p1',p2='$p2',nik1='$nik1',nik2='$nik2',doc='$path',type='$doc_type' WHERE nim='$un'");
+                move_uploaded_file($path_asal,$path);
+                echo "<script>alert('Informasi Skripsi Telah Dirubah... ');window.location='../validasi/';</script>";
+            }
+        }
+    }
 ?>
     <div class="container-fluid px-0" id="bg-div">
         <div class="row justify-content-center">
@@ -87,7 +147,7 @@
                                 <img src="login-form/untad.png" alt="Logo Untad" width="180px" height="140px">
                             </div>
                             <div class="list-group list-group-flush"> 
-                                <a data-toggle="tab" href="#menu1" id="tab1" class="tabs list-group-item active1 ">
+                                <a data-toggle="tab" href="#menu1" id="tab1" class="tabs list-group-item bg-light">
                                 <div class="list-div my-2">
                                     <div class="fa fa-user"></div> &nbsp;&nbsp; Biodata
                                 </div>
@@ -97,7 +157,7 @@
                                         <div class="fa fa-file"></div> &nbsp;&nbsp; Skripsi
                                     </div>
                                 </a> 
-                                <a data-toggle="tab" href="#menu3" id="tab3" class="tabs list-group-item bg-light">
+                                <a data-toggle="tab" href="#menu3" id="tab3" class="tabs list-group-item active1">
                                     <div class="list-div my-2">
                                         <div class="fa fa-cog"></div> &nbsp;&nbsp;&nbsp; Proses Validasi
                                     </div>
@@ -127,7 +187,7 @@
                                 </div>
                             </div>
                             <div class="tab-content">
-                                <div id="menu1" class="tab-pane active">
+                                <div id="menu1" class="tab-pane ">
                                     <div class="row justify-content-center">
                                         <div class="col-11">
                                             <div class="form-card">
@@ -180,7 +240,7 @@
                                         <div class="col-11">
                                             <div class="form-card">
                                                 <h3 class="mt-0 mb-4 text-center">Informasi Skripsi</h3>
-                                                <form onsubmit="event.preventDefault()">
+                                                <form action="" method="post" enctype="multipart/form-data">
                                                     <div class="row">
                                                         <div class="col-12">
                                                             <div class="input-group"> <input type="text" name="judul" placeholder="Judul Skripsi" required="require"> <label>JUDUL SKRIPSI</label> </div>
@@ -188,10 +248,18 @@
                                                     </div>
                                                     <div class="row">
                                                         <div class="col-6">
-                                                            <div class="input-group"> <input type="text" name="p1" placeholder="Pembimbing 1" required="require"> <label>PEMBIMBING 1</label> </div>
+                                                            <div class="input-group"> <input onkeyup="this.value=this.value.replace(/[0-9]/,'')" type="text" name="p1" placeholder="Nama Pembimbing 1" required="require"> <label>NAMA PEMBIMBING 1</label> </div>
                                                         </div>
                                                         <div class="col-6">
-                                                            <div class="input-group"> <input type="text" name="p2" placeholder="Pembimbing 2" required="require" > <label>PEMBIMBING 2</label> </div>
+                                                            <div class="input-group"> <input onkeyup="this.value=this.value.replace(/[^\d]/,'')" type="text" name="nik1" placeholder="NIDM/NIK" required="require" > <label>NIDN/NIK PEMBIMBING 1</label> </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-6">
+                                                            <div class="input-group"> <input onkeyup="this.value=this.value.replace(/[0-9]/,'')" type="text" name="p2" placeholder="Nama Pembimbing 2" required="require"> <label>NAMA PEMBIMBING 2</label> </div>
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <div class="input-group"> <input onkeyup="this.value=this.value.replace(/[^\d]/,'')" type="text" name="nik2" placeholder="NIDM/NIK" required="require" > <label>NIDN/NIK PEMBIMBING 2</label> </div>
                                                         </div>
                                                     </div>
                                                     <div class="row">
@@ -216,7 +284,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div id="menu3" class="tab-pane">
+                                <div id="menu3" class="tab-pane active">
                                     <div class="row justify-content-center">
                                         <div class="col-12">
                                             <?php
@@ -238,7 +306,14 @@
                                                             <div class="form-card">
                                                                 <div class="row">
                                                                     <div class="col-12">
-                                                                        <div class="input-group"> <input type="text" value="<?= $d_validasi['1'];?>" disabled="disable" placeholder="" required="require"> <label>JUDUL SKRIPSI</label> </div>
+                                                                        <div class="keterangan">
+                                                                            <div style="color: darkgray;padding-bottom:8px;">JUDUL SKRIPSI</div>
+                                                                            <span class="caption"><?= $d_validasi['1'];?></span><p></p>
+                                                                            <div style="color: darkgray;padding-bottom:8px;">PEMBIMBING 1</div>
+                                                                            <span class="caption"><?= $d_validasi['2'];?></span><p></p>
+                                                                            <div style="color: darkgray;padding-bottom:8px;">PEMBIMBING 2</div>
+                                                                            <span class="caption"><?= $d_validasi['3'];?></span>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
