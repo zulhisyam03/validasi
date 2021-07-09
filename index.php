@@ -36,8 +36,46 @@
     <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
 
     <link href='https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css' rel='stylesheet'>
+
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <style type="text/css">
+        blink {
+            -webkit-animation: 2s linear infinite kedip; /* for Safari 4.0 - 8.0 */
+            animation: 2s linear infinite kedip;
+        }
+        /* for Safari 4.0 - 8.0 */
+        @-webkit-keyframes kedip { 
+            100% {
+            visibility: hidden;
+            }
+            50% {
+            visibility: hidden;
+            }
+            0% {
+            visibility: visible;
+            }
+        }
+        @keyframes kedip {
+            100% {
+            visibility: hidden;
+            }
+            50% {
+            visibility: hidden;
+            }
+            0% {
+            visibility: visible;
+            }
+        }
+    </style>
 </head>
 <body oncontextmenu='return false' class='snippet-body'>
+<?php
+    $q_validasi = mysqli_query($db, "SELECT * FROM skripsi WHERE nim='$un'");
+    $d_validasi = mysqli_fetch_array($q_validasi);
+?>
     <div class="container-fluid px-0" id="bg-div">
         <div class="row justify-content-center">
             <div class="col-lg-9 col-12">
@@ -180,11 +218,44 @@
                                 </div>
                                 <div id="menu3" class="tab-pane">
                                     <div class="row justify-content-center">
-                                        <div class="col-11">
-                                            <h3 class="mt-0 mb-4 text-center">Scan the QR code to pay</h3>
-                                            <div class="row justify-content-center">
-                                                <div id="qr"> <img src="https://i.imgur.com/DD4Npfw.jpg" width="200px" height="200px"> </div>
-                                            </div>
+                                        <div class="col-12">
+                                            <?php
+                                                if (empty($d_validasi)) {
+                                                    # code...
+                                                    echo "<div style='background-color:red;color:white;width:50%;padding:15px;margin:auto;margin-top:20px;'><blink>Maaf, Silahkan Lengkapi Data Skripsi Terlebih Dahulu ... </blink></div>";                                            
+                                                }
+                                                else {
+                                                    # code...
+                                                    if ($d_validasi['validasi']=="Yes"){
+                                                        echo    "<h3 class='mt-0 mb-4 text-center'>Silahkan Download Document Persetujuan Dibawah</h3>";
+                                                        echo    "<div class='row justify-content-center'>";
+                                                        echo    "<div id='qr'> <i class='fa fa-8x fa-download' style='color:steelblue;'></i></div>";
+                                                        echo    "</div>";
+                                                    }   
+                                                    else {
+                                                        # code...
+                                                        ?>  
+                                                            <div class="form-card">
+                                                                <div class="row">
+                                                                    <div class="col-12">
+                                                                        <div class="input-group"> <input type="text" value="<?= $d_validasi['1'];?>" disabled="disable" placeholder="" required="require"> <label>JUDUL SKRIPSI</label> </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <center><br />
+                                                            <svg class="loader" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 340">
+                                                                <circle cx="170" cy="170" r="160" stroke="#E2007C"/>
+                                                                <circle cx="170" cy="170" r="135" stroke="#404041"/>
+                                                                <circle cx="170" cy="170" r="110" stroke="#E2007C"/>
+                                                                <circle cx="170" cy="170" r="85" stroke="#404041"/>
+                                                            </svg>
+                                                            <br />
+                                                            <h2>Sedang Di Proses ...</h2>
+                                                            </center>
+                                                        <?php
+                                                    }                                                 
+                                                }                                                
+                                            ?>
                                         </div>
                                     </div>
                                 </div>
