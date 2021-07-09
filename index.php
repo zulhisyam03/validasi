@@ -28,11 +28,14 @@
     <meta charset='utf-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <title>FISIP UNTAD - Validasi Judul Skripsi</title>
+    <link rel="shortcut icon" href="login-form/untad.png" type="image/x-icon">
     <link href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css' rel='stylesheet'>
     <link href='https://use.fontawesome.com/releases/v5.8.1/css/all.css' rel='stylesheet'>
     <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+
+    <link href='https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css' rel='stylesheet'>
 </head>
 <body oncontextmenu='return false' class='snippet-body'>
     <div class="container-fluid px-0" id="bg-div">
@@ -138,28 +141,37 @@
                                     <div class="row justify-content-center">
                                         <div class="col-11">
                                             <div class="form-card">
-                                                <h3 class="mt-0 mb-4 text-center">Enter your card details to pay</h3>
+                                                <h3 class="mt-0 mb-4 text-center">Informasi Skripsi</h3>
                                                 <form onsubmit="event.preventDefault()">
                                                     <div class="row">
                                                         <div class="col-12">
-                                                            <div class="input-group"> <input type="text" id="cr_no" placeholder="0000 0000 0000 0000" minlength="19" maxlength="19"> <label>CARD NUMBER</label> </div>
+                                                            <div class="input-group"> <input type="text" name="judul" placeholder="Judul Skripsi" required="require"> <label>JUDUL SKRIPSI</label> </div>
                                                         </div>
                                                     </div>
                                                     <div class="row">
                                                         <div class="col-6">
-                                                            <div class="input-group"> <input type="text" name="exp" id="exp" placeholder="MM/YY" minlength="5" maxlength="5"> <label>CARD EXPIRY</label> </div>
+                                                            <div class="input-group"> <input type="text" name="p1" placeholder="Pembimbing 1" required="require"> <label>PEMBIMBING 1</label> </div>
                                                         </div>
                                                         <div class="col-6">
-                                                            <div class="input-group"> <input type="password" name="cvcpwd" placeholder="&#9679;&#9679;&#9679;" class="placeicon" minlength="3" maxlength="3"> <label>CVV</label> </div>
+                                                            <div class="input-group"> <input type="text" name="p2" placeholder="Pembimbing 2" required="require" > <label>PEMBIMBING 2</label> </div>
                                                         </div>
                                                     </div>
                                                     <div class="row">
-                                                        <div class="col-md-12"> <input type="submit" value="Pay $ 100" class="btn btn-primary placeicon"> </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-md-12">
-                                                            <p class="text-center mb-5" id="below-btn"><a href="#">Use a test card</a></p>
+                                                        <div class="col-12">
+                                                                <div class="relative border-dotted h-48 rounded-lg border-dashed border-2 border-blue-700 bg-gray-100 flex justify-center items-center">
+                                                                    <div class="absolute">
+                                                                        <div class="flex flex-col items-center"> 
+                                                                            <i class="fa fa-folder-open fa-4x text-blue-700"></i> 
+                                                                            <span class="block text-gray-400 font-normal">Attach you files here</span> 
+                                                                        </div>
+                                                                    </div> 
+                                                                    <input type="file" class="h-full w-full opacity-0" name="doc" required="require" >
+                                                                </div>
                                                         </div>
+                                                    </div>
+                                                    <br />
+                                                    <div class="row">
+                                                        <div class="col-md-12"> <input type="submit" name="simpan_skripsi" value="Simpan" class="btn btn-primary placeicon"> </div>
                                                     </div>
                                                 </form>
                                             </div>
@@ -183,6 +195,9 @@
             </div>
         </div>
     </div>
+
+<script type='text/javascript' src='https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js'></script>
+
 <script type='text/javascript' src='https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js'></script>
 <script type='text/javascript'>
     $(document).ready(function(){
