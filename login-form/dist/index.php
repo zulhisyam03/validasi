@@ -81,7 +81,7 @@
       $nama_reg  = $_POST['nama_reg'];
       $nim_reg   = $_POST['nim_reg'];
       $email_reg = $_POST['email_reg'];
-      $pass_reg  = $_POST['pass_reg'];
+      $pass_reg  = password_hash($_POST['pass_reg'], PASSWORD_DEFAULT);
       $hp_reg    = $_POST['hp_reg'];
 
       // Cek Ketersediaan NIM
@@ -90,7 +90,7 @@
 
       if(empty($d_cek)){
         $q_reg  = mysqli_query($db,"INSERT INTO biodata VALUE ('$nama_reg','$nim_reg','$email_reg','$hp_reg','$pass_reg')");
-        echo "<script>alert('Selamat, Anda Sukses Mendaftarkan Akun ...');window.location='../../index.html';</script>";
+        echo "<script>alert('Selamat, Anda Sukses Mendaftarkan Akun ...');window.location='../../';</script>";
 
         $_SESSION['user_nim']   = $nim_reg;
         $_SESSION['user_pass']  = $pass_reg;
@@ -101,20 +101,28 @@
     }
     else if(isset($_POST['login'])){
       $nim_log  = $_POST['nama_log'];
-      $pass_log = $_POST['pass_log'];
 
-      $q_login = mysqli_query($db,"SELECT * FROM biodata WHERE nim='$nim_log' and password='$pass_log'");
+      $q_login = mysqli_query($db,"SELECT * FROM biodata WHERE nim='$nim_log'");
       $d_login = mysqli_fetch_array($q_login);
 
       if (empty($d_login)) {
         # code...
-        echo "<div class='warning'><blink>NIM atau PASSWORD Salah !!!<blink></div>";
+        echo "<div class='warning'><blink>NIM Tidak Terdaftar !!!<blink></div>";
       }
       else {
         # code...
-        $_SESSION['user_nim']  = $d_login['nim'];
-        $_SESSION['user_pass'] = $d_login['password'];
-        echo "<script>alert(\"Selamat Datang ".$d_login['nama']."\");window.location=\"../../\";</script>";
+        $pass_log = password_verify($_POST['pass_log'], $d_login['password']);
+        if ($pass_log) {
+          # code...
+          $_SESSION['user_nim']  = $d_login['nim'];
+          $_SESSION['user_pass'] = $d_login['password'];
+          echo "<script>alert(\"Selamat Datang ".$d_login['nama']."\");window.location=\"../../\";</script>";
+        }
+        else {
+          # code...
+          echo "<div class='warning'><blink>Password Yang Dimasukan Salah !!!<blink></div>";
+        }
+        
       }
     }
   ?>
@@ -147,9 +155,9 @@
           <center><img src="../untad.png" alt=""></center>
           <h1>Login</h1>
           <form method="post" name=login>
-            <input type="text" name="nama_log" placeholder="Username" required="required" />
+            <input type="text" name="nama_log" placeholder="NIM" required="required" />
               <input type="password" name="pass_log" placeholder="Password" required="required" />
-              <button type="submit" name="login" class="btn btn-primary btn-block btn-large">Let me in.</button>
+              <button type="submit" name="login" class="btn btn-primary btn-block btn-large">Masuk</button>
           </form>
           <p></p>
           <h3>Belum Punya Akun? <a href="?registrasi">Daftar</a></h3>
