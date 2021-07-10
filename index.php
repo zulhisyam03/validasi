@@ -295,9 +295,25 @@
                                                 else {
                                                     # code...
                                                     if ($d_validasi['validasi']=="Yes"){
+                                            ?>
+                                                        <div class="form-card">
+                                                            <div class="row">
+                                                                <div class="col-12">
+                                                                    <div class="keterangan">
+                                                                        <div style="color: darkgray;padding-bottom:8px;">JUDUL SKRIPSI</div>
+                                                                        <span class="caption"><?= $d_validasi['1'];?></span><p></p>
+                                                                        <div style="color: darkgray;padding-bottom:8px;">PEMBIMBING 1</div>
+                                                                        <span class="caption"><?= $d_validasi['2'];?></span><p></p>
+                                                                        <div style="color: darkgray;padding-bottom:8px;">PEMBIMBING 2</div>
+                                                                        <span class="caption"><?= $d_validasi['3'];?></span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                            <?php
                                                         echo    "<h3 class='mt-0 mb-4 text-center'>Silahkan Download Document Persetujuan Dibawah</h3>";
                                                         echo    "<div class='row justify-content-center'>";
-                                                        echo    "<div id='qr'> <i class='fa fa-8x fa-download' style='color:steelblue;'></i></div>";
+                                                        echo    "<div id='qr'> <a href='#'><i class='fa fa-8x fa-download' style='color:steelblue;'></i></a></div>";
                                                         echo    "</div>";
                                                     }   
                                                     else {
