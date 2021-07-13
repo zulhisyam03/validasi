@@ -42,6 +42,15 @@
         }
       }
   }
+
+  // CODE UBAH KETERANGAN VALIDASI
+  if (isset($_GET['validasi'])) {
+    # code...
+    $validasi    = $_GET['validasi'];
+    $nim_mhs     = $_GET['nim_mhs'];
+    $up_validasi = mysqli_query($db, "UPDATE skripsi SET validasi='$validasi' WHERE nim='$nim_mhs'");
+    echo "<script>alert('Sukses !!!');window.location='../admin/';</script>";
+  }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -299,6 +308,7 @@
                                   <option value="No" selected="selected"><?= $d_mhs['validasi'];?></option>
                                   <option value="Yes">Yes</option>
                                 </select>
+                                <input type="hidden" name="nim_mhs" value="<?= $d_mhs['nim'];?>">
                               </td>
                               </div>
                           <?php
@@ -312,6 +322,7 @@
                                   <option value="No">No</option>
                                   <option value="Yes" selected="selected"><?= $d_mhs['validasi'];?></option>
                                 </select>
+                                <input type="hidden" name="nim_mhs" value="<?= $d_mhs['nim'];?>">
                               </td>
                               </div>
                           <?php
