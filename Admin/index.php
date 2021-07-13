@@ -1,3 +1,48 @@
+<?php
+  session_start();
+  include "../connect.php";
+
+  if((empty($_SESSION['user_nim']) or (empty($_SESSION['user_pass'])))){
+    echo "<script>location.href='../login-form/dist/';</script>";
+  }
+  else {
+      # code...
+      if ($_SESSION['user_nim']!="admin") {
+        # code...
+        echo "<script>location.href='../login-form/dist/';</script>";
+      }
+      else if ($_SESSION['user_nim']=="admin") 
+        # code...
+      {
+        $un      = $_SESSION['user_nim'];
+        $up      = $_SESSION['user_pass'];
+        $q_loginadmin = mysqli_query($db,"SELECT * FROM admin WHERE user='$un'");
+        $d_loginadmin = mysqli_fetch_array($q_loginadmin);
+        if (empty($d_loginadmin)) {
+          # code...
+          echo "<script>location.href='../login-form/dist/';</script>";
+        }
+        else {
+          # code...
+          $password = password_verify($_SESSION['user_pass'], $d_loginadmin['password']);
+          if ($password=false) {
+            # code...
+            echo "<script>location.href='../login-form/dist/';</script>";
+          }
+        }
+      }
+      else{
+        $un      = $_SESSION['user_nim'];
+        $up      = $_SESSION['user_pass'];
+        $cek_log = mysqli_query($db,"SELECT * FROM biodata WHERE nim='$un' and password='$up'");
+        $data_log= mysqli_fetch_array($cek_log);
+        if (empty($data_log)) {
+            # code...
+            echo "<script>location.href='login-form/dist/';</script>";
+        }
+      }
+  }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -70,7 +115,7 @@
       </li>
       <!-- Navbar END-->
       <li class="nav-item">
-        <a class="nav-link" data-widget="" data-slide="rue" href="#" role="button">
+        <a class="nav-link" data-widget="" data-slide="rue" href="../logout.php" role="button">
           <i class="fas fa-sign-out-alt"></i>
         </a>
       </li>
@@ -231,7 +276,6 @@
                           <th>Nama Mahasiswa</th>
                           <th>No.Stanbuk</th>
                           <th>Judul Skripsi</th>
-                          <th>File</th>
                           <th>Disetujui</th>
                           <th>***</th>
                         </tr>
@@ -243,8 +287,7 @@
                         <tr>
                           <td><?= $d_mhs['nama'];?></td>
                           <td><?= $d_mhs['nim'];?></td>
-                          <td><?= $d_mhs['judul'];?></td>
-                          <td><center><a href="../<?= $d_mhs['doc'];?>"><i class="fa fa-download"></i></a></center></td>
+                          <td><a href="../<?= $d_mhs['doc'];?>"><?= $d_mhs['judul'];?></a></td>                         
                           <!-- Code Valdasi -->                  
                           <?php
                             if ($d_mhs['validasi']=="No")

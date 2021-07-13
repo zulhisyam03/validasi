@@ -11,6 +11,19 @@
       # code...
       echo "<script>location.href='../../index.php';</script>";
     }
+    else if ($_SESSION['user_nim']=="admin") 
+        # code...
+      {
+        $q_cekadmin = mysqli_query($db,"SELECT * FROM admin WHERE user='$un'");
+        $d_cekadmin = mysqli_fetch_array($q_cekadmin);
+        if (!empty($d_cekadmin)) {
+          # code...
+          if ($up==$d_cekadmin['password']) {
+            # code...
+            echo "<script>location.href='../../admin/';</script>";
+          }
+        }
+      }
   }
 ?>
 <!DOCTYPE html>
@@ -120,7 +133,7 @@
         }
         else {
           # code...
-          echo "<div class='warning'><blink>Password Admin Salah - ".$password_admin." !!!<blink></div>";
+          echo "<div class='warning'><blink>Password Admin Salah !!!<blink></div>";
         }
       }
       
