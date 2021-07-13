@@ -175,7 +175,7 @@
             <input type="text" name="email_reg" placeholder="E-Mail" required="required">
             <input type="text" name="hp_reg" placeholder="Nomor Handphone" required="required" onkeyup="this.value=this.value.replace(/[^\d]/,'')">
             <input type="password" name="pass_reg" placeholder="Password" required="required" />
-            <button type="submit" name="daftar" class="btn btn-primary btn-block btn-large">Daftar</button>
+            <button type="submit" name="daftar" class="btn btn-primary btn-block btn-large" onclick="return confirm('Periksa NIM Apakah Sudah Benar? NIM Tidak Bisa Di Rubah Setelah Mendaftar!!!')">Daftar</button>
           </form>
           <p></p>
           <h3>Sudah Punya Akun? <a href="../dist/">Login</a></h3>

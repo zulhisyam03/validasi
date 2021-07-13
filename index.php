@@ -92,6 +92,9 @@
             visibility: visible;
             }
         }
+        input{
+            text-transform: uppercase;
+        }
     </style>
 </head>
 <body oncontextmenu='return false' class='snippet-body'>
@@ -99,6 +102,17 @@
     $q_validasi = mysqli_query($db, "SELECT * FROM skripsi WHERE nim='$un'");
     $d_validasi = mysqli_fetch_array($q_validasi);
 
+    if (isset($_POST['update_biodata'])) {
+        # code...
+        $nama_mhs   = $_POST['nama'];
+        $email_mhs  = $_POST['email'];
+        $hp_mhs     = $_POST['hp'];
+
+        $q_upbiodata = mysqli_query($db, "UPDATE biodata SET nama='$nama_mhs',email='$email_mhs',hp='$hp_mhs' WHERE nim='$un'");
+        echo "<script>alert('Sukses Update Biodata ... ');window.location='../validasi/';</script>";
+    }
+
+    // CODE SIMPAN SKRIPSI
     if (isset($_POST['simpan_skripsi'])) {
         # code...
         $judul  = $_POST['judul'];
@@ -129,7 +143,7 @@
             else {
                 # code...
                 unset($d_validasi['doc']);
-                $q_updateskripsi = mysqli_query($db, "UPDATE TABLE skrispi SET judul='$judul',p1='$p1',p2='$p2',nik1='$nik1',nik2='$nik2',doc='$path',type='$doc_type',tgl_upload=NOW() WHERE nim='$un'");
+                $q_updateskripsi = mysqli_query($db, "UPDATE skrispi SET judul='$judul',p1='$p1',p2='$p2',nik1='$nik1',nik2='$nik2',doc='$path',type='$doc_type',tgl_upload=NOW() WHERE nim='$un'");
                 move_uploaded_file($path_asal,$path);
                 echo "<script>alert('Informasi Skripsi Telah Dirubah... ');window.location='../validasi/';</script>";
             }
@@ -181,7 +195,7 @@
                                     </div>
                                     <div class="row justify-content-right">
                                         <div class="col-12">
-                                            <p class="mb-0 mr-4 text-right"><span class="top-highlight"><?= $data['nama']; ?></span> <a href="logout.php">(Logout)</a></i></p>
+                                            <p class="mb-0 mr-4 text-right"><span class="top-highlight" style="text-transform: uppercase;"><?= $data['nama']; ?></span> <a href="logout.php">(Logout)</a></i></p>
                                         </div>
                                     </div>
                                 </div>
@@ -192,7 +206,7 @@
                                         <div class="col-11">
                                             <div class="form-card">
                                                 <h3 class="mt-0 mb-4 text-center">Biodata Mahasiswa</h3>
-                                                <form onsubmit="event.preventDefault()">
+                                                <form method="POST" enctype="multipart/form-data" action="">
                                                     <div class="row">
                                                         <div class="col-12">
                                                             <div class="input-group"> 
@@ -204,7 +218,7 @@
                                                     <div class="row">
                                                         <div class="col-12">
                                                             <div class="input-group"> 
-                                                                <input type="text" name="nim" id="ben-nm" placeholder="0000000" value="<?= $data['nim'];?>"> 
+                                                                <input type="text" name="nim" id="ben-nm" disabled placeholder="0000000" value="<?= $data['nim'];?>"> 
                                                                 <label>NIM</label> 
                                                             </div>
                                                         </div>
@@ -227,7 +241,7 @@
                                                     </div>
                                                     <div class="row">
                                                         <div class="col-md-12"> 
-                                                            <input type="submit" value="UPDATE" class="btn btn-primary placeicon"> 
+                                                            <input type="submit" name="update_biodata" value="UPDATE" class="btn btn-primary placeicon"> 
                                                         </div>
                                                     </div>
                                                 </form>
