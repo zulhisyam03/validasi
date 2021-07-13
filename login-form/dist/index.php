@@ -104,8 +104,28 @@
 
       $q_login = mysqli_query($db,"SELECT * FROM biodata WHERE nim='$nim_log'");
       $d_login = mysqli_fetch_array($q_login);
+      
+      if ($nim_log=="admin") {
+        # code...
+        // -- cek admin 
+        $q_loginadmin = mysqli_query($db,"SELECT * FROM admin WHERE user='$nim_log'");
+        $d_loginadmin = mysqli_fetch_array($q_loginadmin);
 
-      if (empty($d_login)) {
+        $password_admin = password_verify($_POST['pass_log'], $d_loginadmin['password']);
+        if ($password_admin) {
+          # code...
+          $_SESSION['user_nim']  = $d_loginadmin['user'];
+          $_SESSION['user_pass'] = $d_loginadmin['password'];
+          echo "<script>alert(\"Selamat Datang ".$d_loginadmin['user']."\");window.location=\"../../admin/\";</script>";
+        }
+        else {
+          # code...
+          echo "<div class='warning'><blink>Password Admin Salah - ".$password_admin." !!!<blink></div>";
+        }
+      }
+      
+      //CODE LOGIN MAHASISWA
+      else if (empty($d_login)) {
         # code...
         echo "<div class='warning'><blink>NIM Tidak Terdaftar !!!<blink></div>";
       }
