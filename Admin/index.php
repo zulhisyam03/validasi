@@ -50,6 +50,7 @@
     $nim_mhs     = $_GET['nim_mhs'];
     $up_validasi = mysqli_query($db, "UPDATE skripsi SET validasi='$validasi' WHERE nim='$nim_mhs'");
     echo "<script>alert('Sukses !!!');window.location='../admin/';</script>";
+    $_SESSION['T'] = $validasi." - ".$nim_mhs;
   }
 ?>
 <!DOCTYPE html>
@@ -72,7 +73,6 @@
   <link rel="stylesheet" href="dist/css/adminlte.min.css">
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
-
 <!-- PHP Code -->
   <?php
     include "../connect.php";
@@ -277,74 +277,76 @@
                     <h3 class="card-title"><i class="fa fa-book"></i> DATA PENGAJUAN UJIAN SKRIPSI</h3>
                   </div>
                   <!-- /.card-header -->
-                  <div class="card-body">
-                    <form action="">
-                      <table id="example1" class="table table-bordered table-striped">
-                        <thead>
-                        <tr>
-                          <th>Nama Mahasiswa</th>
-                          <th>No.Stanbuk</th>
-                          <th>Judul Skripsi</th>
-                          <th>Disetujui</th>
-                          <th>***</th>
-                        </tr>
-                        </thead>
-                        <tbody>  
+                  <div class="card-body">                
+                    <table id="example1" class="table table-bordered table-striped">
+                      <thead>
+                      <tr>
+                        <th>Nama Mahasiswa</th>
+                        <th>No.Stanbuk</th>
+                        <th>Judul Skripsi</th>
+                        <th>Disetujui</th>
+                        <th>***</th>
+                      </tr>
+                      </thead>
+                      <tbody>  
+                      <?php
+                        while($d_mhs  = mysqli_fetch_array($q_mhs)){
+                      ?>                      
+                      <tr>
+                        <td><?= $d_mhs['nama'];?></td>
+                        <td><?= $d_mhs['nim'];?></td>
+                        <td><a href="../<?= $d_mhs['doc'];?>"><?= $d_mhs['judul'];?></a></td>                         
+                        <!-- Code Valdasi -->                  
                         <?php
-                          while($d_mhs  = mysqli_fetch_array($q_mhs)){
-                        ?>                      
-                        <tr>
-                          <td><?= $d_mhs['nama'];?></td>
-                          <td><?= $d_mhs['nim'];?></td>
-                          <td><a href="../<?= $d_mhs['doc'];?>"><?= $d_mhs['judul'];?></a></td>                         
-                          <!-- Code Valdasi -->                  
-                          <?php
-                            if ($d_mhs['validasi']=="No")
-                            {
-                          ?>
-                              <div class="form-group">  
-                              <td style="background-color:#cc1d22;color:white;">
-                                <select name="validasi" class="form-control" onchange="this.form.submit();">
-                                  <option value="No" selected="selected"><?= $d_mhs['validasi'];?></option>
-                                  <option value="Yes">Yes</option>
-                                </select>
-                                <input type="hidden" name="nim_mhs" value="<?= $d_mhs['nim'];?>">
-                              </td>
-                              </div>
-                          <?php
-                            }
-                            else {
-                              # code...
-                          ?>
-                              <div class="form-group">
-                              <td style="background-color:#32d165;color:white;">
-                                <select name="validasi" class="form-control" onchange="this.form.submit();">
-                                  <option value="No">No</option>
-                                  <option value="Yes" selected="selected"><?= $d_mhs['validasi'];?></option>
-                                </select>
-                                <input type="hidden" name="nim_mhs" value="<?= $d_mhs['nim'];?>">
-                              </td>
-                              </div>
-                          <?php
-                            }
-                          ?>
-                          <td>-</td>
-                        </tr>
+                          if ($d_mhs['validasi']=="No")
+                          {
+                        ?>
+                            <div class="form-group">  
+                            <td style="background-color:#cc1d22;color:white;">
+                            <form action="">
+                              <input type="hidden" name="nim_mhs" value="<?= $d_mhs['nim'];?>">
+                              <select name="validasi" class="form-control" onchange="this.form.submit();">
+                                <option value="No" selected="selected"><?= $d_mhs['validasi'];?></option>
+                                <option value="Yes">Yes</option>
+                              </select>
+                            </form>
+                            </td>
+                            </div>
+                        <?php
+                          }
+                          else {
+                            # code...
+                        ?>
+                            <div class="form-group">
+                            <td style="background-color:#32d165;color:white;">
+                            <form action="">
+                              <input type="hidden" name="nim_mhs" value="<?= $d_mhs['nim'];?>">
+                              <select name="validasi" class="form-control" onchange="this.form.submit();">
+                                <option value="No">No</option>
+                                <option value="Yes" selected="selected"><?= $d_mhs['validasi'];?></option>
+                              </select>   
+                            </form>                             
+                            </td>
+                            </div>
                         <?php
                           }
                         ?>
-                        </tbody>
-                        <tfoot>
-                        <tr>
-                          <th>Nama Mahasiswa</th>
-                          <th>No.Stanbuk</th>
-                          <th>Judul Skripsi</th>
-                          <th>Keterangan</th>
-                          <th>***</th>
-                        </tr>
-                        </tfoot>
-                      </table>
-                    </form>
+                        <td>-</td>
+                      </tr>
+                      <?php
+                        }
+                      ?>
+                      </tbody>
+                      <tfoot>
+                      <tr>
+                        <th>Nama Mahasiswa</th>
+                        <th>No.Stanbuk</th>
+                        <th>Judul Skripsi</th>
+                        <th>Keterangan</th>
+                        <th>***</th>
+                      </tr>
+                      </tfoot>
+                    </table>
                   </div>
                   <!-- /.card-body -->
                 </div>
