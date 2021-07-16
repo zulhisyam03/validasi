@@ -327,7 +327,7 @@
                                             <?php
                                                         echo    "<h3 class='mt-0 mb-4 text-center'>Silahkan Download Document Persetujuan Dibawah</h3>";
                                                         echo    "<div class='row justify-content-center'>";
-                                                        echo    "<div id='qr'> <a href='#'><i class='fa fa-8x fa-download' style='color:steelblue;'></i></a></div>";
+                                                        echo    "<div id='qr'> <a href='admin/print.php?nim=".$d_validasi[0]."'><i class='fa fa-8x fa-download' style='color:steelblue;'></i></a></div>";
                                                         echo    "</div>";
                                                     }   
                                                     else {

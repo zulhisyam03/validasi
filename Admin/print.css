@@ -1,0 +1,49 @@
+.addres{
+    font-size: 11px;
+}
+.top{
+    vertical-align: top;
+}
+.f4{
+    width: 19cm;
+    height: 31cm;
+    border:0px solid red;
+    padding-top: 35px;
+    margin: auto;
+}
+.header{
+    width: 100%;
+    border: 0px solid green;
+    font-size:18px;
+}
+.headtext{
+    margin-top: -110px;
+    padding-left:15px;
+    position: absolute;
+    text-align:center;
+    width:19cm;
+}
+.untad{
+    font-size: 26px;
+}
+.hr{
+    height: 8px;
+    width: 100%;
+    margin-top:8px;
+}
+.img1{
+    margin-left:0;
+
+}
+.img2{
+    margin-top:-18px;
+    position:absolute;
+    width: 150px;
+    height:30px;
+    margin-left:8cm;
+}
+.isi{
+    width: 100%;
+    padding-left: 10px;
+    padding-right: 10px;
+}
