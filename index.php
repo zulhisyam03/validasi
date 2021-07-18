@@ -226,6 +226,14 @@
                                                     <div class="row">
                                                         <div class="col-12">
                                                             <div class="input-group"> 
+                                                                <input type="text" name="prodi" id="ben-nm" disabled placeholder="Program Studi" value="<?= $data['prodi'];?>"> 
+                                                                <label>Program Studi</label> 
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <div class="input-group"> 
                                                                 <input type="text" name="email" placeholder="Julle@gmail.com" class="placeicon"  value="<?= $data['email'];?>"> 
                                                                 <label>E-MAIL</label> 
                                                             </div>
