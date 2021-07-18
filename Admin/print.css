@@ -40,10 +40,44 @@
     position:absolute;
     width: 150px;
     height:30px;
-    margin-left:8cm;
+    margin-left:7.5cm;
 }
 .isi{
     width: 100%;
     padding-left: 10px;
     padding-right: 10px;
+    text-align: justify;
+    word-spacing: 1px;
+}
+.a{
+    text-align: center;
+}
+table{
+    text-align: left;
+    width: 100%;
+}
+td{
+    line-height: 2;
+    letter-spacing: 1px;
+    word-spacing: 1px;
+    text-transform: uppercase;
+    padding:10px;
+    vertical-align: top;
+}
+.paraf{
+    letter-spacing: 0px;
+    margin-top:50px;
+    float: right;
+    text-align: justify;
+    width: 260px;
+    border: 0px solid black;
+}
+.arsip{
+    margin-top: 240px;
+    float: left;
+    width:250px;
+    text-align: left;
+}
+.c{
+    font-size: 11px;
 }
