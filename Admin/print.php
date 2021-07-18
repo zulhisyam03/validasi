@@ -104,11 +104,13 @@
                     Demikian surat keterangan ini dibuat untuk sebagaimana mestinya.
                     <p>
                     <div class="paraf">
+                        <img class="imgttd" src="assets/ttd.jpg">
+                        <br>
                         Palu, '.tgl_indo(date("Y-n-j")).'<br>
                         Ketua Jurusan '.$jurusan.',
-                        <br>&nbsp;
                         <p>&nbsp;
-                        <p><u><b>'.$ket_jurusan.'</b></u><br><b>Nip. '.$nip.'</b>
+                        <br>&nbsp;
+                        <br><u><b>'.$ket_jurusan.'</b></u><br><b>Nip. '.$nip.'</b>
                     </div>
                     
                     <div class="arsip">

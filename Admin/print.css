@@ -41,6 +41,13 @@
     width: 150px;
     height:30px;
     margin-left:7.5cm;
+}.imgttd{
+    width: 142px;
+    height: 72px;
+    margin-top: 122px;
+    padding-left: 10px;
+    margin-bottom: -122px;
+    position: absolute;
 }
 .isi{
     width: 100%;

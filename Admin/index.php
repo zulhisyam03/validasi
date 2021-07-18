@@ -179,7 +179,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="./index.html" class="nav-link active">
+                <a href="./index.php" class="nav-link active">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Pengajuan Skripsi</p>
                 </a>
@@ -187,7 +187,7 @@
             </ul>
           </li>
           <li class="nav-item">
-            <a href="pages/widgets.html" class="nav-link">
+            <a href="setting.php" class="nav-link">
               <i class="nav-icon fas fa-cog"></i>
               <p>
                 Seting
