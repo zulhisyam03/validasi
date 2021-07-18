@@ -39,6 +39,12 @@
     -webkit-animation: 2s linear infinite kedip; /* for Safari 4.0 - 8.0 */
     animation: 2s linear infinite kedip;
   }
+  select{
+    width: 100%;
+    height: 40px;
+    border-radius: 5px;
+    margin-bottom: 8px;
+  }
   /* for Safari 4.0 - 8.0 */
   @-webkit-keyframes kedip { 
     100% {
@@ -96,13 +102,14 @@
       $email_reg = $_POST['email_reg'];
       $pass_reg  = password_hash($_POST['pass_reg'], PASSWORD_DEFAULT);
       $hp_reg    = $_POST['hp_reg'];
+      $prodi     = $_POST['prodi'];
 
       // Cek Ketersediaan NIM
       $q_cek = mysqli_query($db, "SELECT * FROM biodata WHERE nim='$nim_reg'");
       $d_cek = mysqli_num_rows($q_cek);
 
       if(empty($d_cek)){
-        $q_reg  = mysqli_query($db,"INSERT INTO biodata VALUE ('$nama_reg','$nim_reg','$email_reg','$hp_reg','$pass_reg')");
+        $q_reg  = mysqli_query($db,"INSERT INTO biodata VALUE ('$nama_reg','$nim_reg','$prodi','$email_reg','$hp_reg','$pass_reg')");
         echo "<script>alert('Selamat, Anda Sukses Mendaftarkan Akun ...');window.location='../../';</script>";
 
         $_SESSION['user_nim']   = $nim_reg;
@@ -172,6 +179,14 @@
           <form method="post" name="regis" action="">
             <input type="text" name="nama_reg" placeholder="Nama Lengkap" required="required" />
             <input type="text" name="nim_reg" placeholder="NIM" required="required">
+            <select name="prodi" id="" required="required">
+              <option value="" selected disabled>-- Program Studi --</option>
+              <option value="ANTROPOLOGI">ANTROPOLOGI</option>
+              <option value="ILMU ADMINISTRASI PUBLIK">ILMU ADMINISTRASI PUBLIK</option>
+              <option value="ILMU KOMUNIKASI">ILMU KOMUNIKASI</option>
+              <option value="ILMU PEMERINTAHAN">ILMU PEMERINTAHAN</option>
+              <option value="SOSILOGI">SOSILOGI</option>
+            </select>
             <input type="text" name="email_reg" placeholder="E-Mail" required="required">
             <input type="text" name="hp_reg" placeholder="Nomor Handphone" required="required" onkeyup="this.value=this.value.replace(/[^\d]/,'')">
             <input type="password" name="pass_reg" placeholder="Password" required="required" />
