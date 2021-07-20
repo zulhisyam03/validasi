@@ -3,13 +3,13 @@
   include "../connect.php";
 
   if((empty($_SESSION['user_nim']) or (empty($_SESSION['user_pass'])))){
-    echo "<script>location.href='../login-form/dist/';</script>";
+    echo "<script>location.href='https://ttd-fisipuntad.rf.gd/login-form/dist/';</script>";
   }
   else {
       # code...
       if ($_SESSION['user_nim']!="admin") {
         # code...
-        echo "<script>location.href='../login-form/dist/';</script>";
+        echo "<script>location.href='https://ttd-fisipuntad.rf.gd/login-form/dist/';</script>";
       }
       else if ($_SESSION['user_nim']=="admin") 
         # code...
@@ -20,14 +20,14 @@
         $d_loginadmin = mysqli_fetch_array($q_loginadmin);
         if (empty($d_loginadmin)) {
           # code...
-          echo "<script>location.href='../login-form/dist/';</script>";
+          echo "<script>location.href='https://ttd-fisipuntad.rf.gd/login-form/dist/';</script>";
         }
         else {
           # code...
           $password = password_verify($_SESSION['user_pass'], $d_loginadmin['password']);
           if ($password=false) {
             # code...
-            echo "<script>location.href='../login-form/dist/';</script>";
+            echo "<script>location.href='https://ttd-fisipuntad.rf.gd/login-form/dist/';</script>";
           }
         }
       }
@@ -38,7 +38,7 @@
         $data_log= mysqli_fetch_array($cek_log);
         if (empty($data_log)) {
             # code...
-            echo "<script>location.href='login-form/dist/';</script>";
+            echo "<script>location.href='https://ttd-fisipuntad.rf.gd/login-form/dist/';</script>";
         }
       }
   }
@@ -49,7 +49,7 @@
     $validasi    = $_GET['validasi'];
     $nim_mhs     = $_GET['nim_mhs'];
     $up_validasi = mysqli_query($db, "UPDATE skripsi SET validasi='$validasi' WHERE nim='$nim_mhs'");
-    echo "<script>alert('Sukses !!!');window.location='../admin/';</script>";
+    echo "<script>alert('Sukses !!!');window.location='https://ttd-fisipuntad.rf.gd/admin/';</script>";
     $_SESSION['T'] = $validasi." - ".$nim_mhs;
   }
 ?>
@@ -59,7 +59,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Admin FKIP | Dashboard</title>
-  <link rel="shortcut icon" href="../login-form/untad.png" type="image/x-icon">
+  <link rel="shortcut icon" href="https://ttd-fisipuntad.rf.gd/login-form/untad.png" type="image/x-icon">
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -84,7 +84,7 @@
 
   <!-- Preloader -->
   <div class="preloader flex-column justify-content-center align-items-center">
-    <img class="animation__shake" src="../login-form/untad.png" alt="AdminLTELogo" height="60" width="60">
+    <img class="animation__shake" src="https://ttd-fisipuntad.rf.gd/login-form/untad.png" alt="AdminLTELogo" height="60" width="60">
   </div>
 
   <!-- Navbar -->
