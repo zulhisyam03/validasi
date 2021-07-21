@@ -1,6 +1,6 @@
 <?php
   session_start();
-  include "connect.php";
+  require "connect.php";
 
   if((empty($_SESSION['user_nim']) or (empty($_SESSION['user_pass'])))){
     echo "<script>location.href='login-form/dist/';</script>";

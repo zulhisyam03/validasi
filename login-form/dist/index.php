@@ -1,6 +1,6 @@
 <?php
   session_start();
-  include "https://ttd-fisipuntad.rf.gd/connect.php";
+  require "../../connect.php";
 
   if((!empty($_SESSION['user_nim']) and (!empty($_SESSION['user_pass'])))){
     $un      = $_SESSION['user_nim'];
@@ -9,7 +9,7 @@
     $data_log= mysqli_fetch_array($cek_log);
     if (!empty($data_log)) {
       # code...
-      echo "<script>location.href='https://ttd-fisipuntad.rf.gd/';</script>";
+      echo "<script>location.href='http://ttd-fisipuntad.rf.gd/';</script>";
     }
     else if ($_SESSION['user_nim']=="admin") 
         # code...
@@ -20,7 +20,7 @@
           # code...
           if ($up==$d_cekadmin['password']) {
             # code...
-            echo "<script>location.href='https://ttd-fisipuntad.rf.gd/admin';</script>";
+            echo "<script>location.href='http://ttd-fisipuntad.rf.gd/admin';</script>";
           }
         }
       }
@@ -110,7 +110,7 @@
 
       if(empty($d_cek)){
         $q_reg  = mysqli_query($db,"INSERT INTO biodata VALUE ('$nama_reg','$nim_reg','$prodi','$email_reg','$hp_reg','$pass_reg')");
-        echo "<script>alert('Selamat, Anda Sukses Mendaftarkan Akun ...');window.location='https://ttd-fisipuntad.rf.gd/';</script>";
+        echo "<script>alert('Selamat, Anda Sukses Mendaftarkan Akun ...');window.location='http://ttd-fisipuntad.rf.gd/';</script>";
 
         $_SESSION['user_nim']   = $nim_reg;
         $_SESSION['user_pass']  = $pass_reg;
@@ -132,15 +132,15 @@
         $d_loginadmin = mysqli_fetch_array($q_loginadmin);
 
         $password_admin = password_verify($_POST['pass_log'], $d_loginadmin['password']);
-        if ($password_admin) {
+        if ($password_admin=='1') {
           # code...
           $_SESSION['user_nim']  = $d_loginadmin['user'];
           $_SESSION['user_pass'] = $d_loginadmin['password'];
-          echo "<script>alert(\"Selamat Datang ".$d_loginadmin['user']."\");window.location=\"https://ttd-fisipuntad.rf.gd/Admin/\";</script>";
+          echo "<script>alert(\"Selamat Datang ".$d_loginadmin['user']."\");window.location=\"http://ttd-fisipuntad.rf.gd/Admin/\";</script>";
         }
         else {
           # code...
-          echo "<div class='warning'><blink>Password Admin Salah !!!<blink></div>";
+          echo "<div class='warning'><blink>".$d_loginadmin['password']."Password Admin Salah !!!<blink></div>";
         }
       }
       
@@ -152,11 +152,11 @@
       else {
         # code...
         $pass_log = password_verify($_POST['pass_log'], $d_login['password']);
-        if ($pass_log) {
+        if ($pass_log=='1') {
           # code...
           $_SESSION['user_nim']  = $d_login['nim'];
           $_SESSION['user_pass'] = $d_login['password'];
-          echo "<script>alert(\"Selamat Datang ".$d_login['nama']."\");window.location=\"https://ttd-fisipuntad.rf.gd/\";</script>";
+          echo "<script>alert(\"Selamat Datang ".$d_login['nama']."\");window.location=\"http://ttd-fisipuntad.rf.gd/\";</script>";
         }
         else {
           # code...
@@ -193,7 +193,7 @@
             <button type="submit" name="daftar" class="btn btn-primary btn-block btn-large" onclick="return confirm('Periksa NIM Apakah Sudah Benar? NIM Tidak Bisa Di Rubah Setelah Mendaftar!!!')">Daftar</button>
           </form>
           <p></p>
-          <h3>Sudah Punya Akun? <a href="https://ttd-fisipuntad.rf.gd/login-form/dist/">Login</a></h3>
+          <h3>Sudah Punya Akun? <a href="http://ttd-fisipuntad.rf.gd/login-form/dist/">Login</a></h3>
         </div>
       <?php
     }

@@ -1,15 +1,15 @@
 <?php
   session_start();
-  include "../connect.php";
+  require "../connect.php";
 
   if((empty($_SESSION['user_nim']) or (empty($_SESSION['user_pass'])))){
-    echo "<script>location.href='https://ttd-fisipuntad.rf.gd/login-form/dist/';</script>";
+    echo "<script>location.href='http://ttd-fisipuntad.rf.gd/login-form/dist/';</script>";
   }
   else {
       # code...
       if ($_SESSION['user_nim']!="admin") {
         # code...
-        echo "<script>location.href='https://ttd-fisipuntad.rf.gd/login-form/dist/';</script>";
+        echo "<script>location.href='http://ttd-fisipuntad.rf.gd/login-form/dist/';</script>";
       }
       else if ($_SESSION['user_nim']=="admin") 
         # code...
@@ -20,14 +20,14 @@
         $d_loginadmin = mysqli_fetch_array($q_loginadmin);
         if (empty($d_loginadmin)) {
           # code...
-          echo "<script>location.href='https://ttd-fisipuntad.rf.gd/login-form/dist/';</script>";
+          echo "<script>location.href='http://ttd-fisipuntad.rf.gd/login-form/dist/';</script>";
         }
         else {
           # code...
           $password = password_verify($_SESSION['user_pass'], $d_loginadmin['password']);
           if ($password=false) {
             # code...
-            echo "<script>location.href='https://ttd-fisipuntad.rf.gd/login-form/dist/';</script>";
+            echo "<script>location.href='http://ttd-fisipuntad.rf.gd/login-form/dist/';</script>";
           }
         }
       }
@@ -38,7 +38,7 @@
         $data_log= mysqli_fetch_array($cek_log);
         if (empty($data_log)) {
             # code...
-            echo "<script>location.href='https://ttd-fisipuntad.rf.gd/login-form/dist/';</script>";
+            echo "<script>location.href='http://ttd-fisipuntad.rf.gd/login-form/dist/';</script>";
         }
       }
   }
@@ -49,7 +49,7 @@
     $validasi    = $_GET['validasi'];
     $nim_mhs     = $_GET['nim_mhs'];
     $up_validasi = mysqli_query($db, "UPDATE skripsi SET validasi='$validasi' WHERE nim='$nim_mhs'");
-    echo "<script>alert('Sukses !!!');window.location='https://ttd-fisipuntad.rf.gd/admin/';</script>";
+    echo "<script>alert('Sukses !!!');window.location='http://ttd-fisipuntad.rf.gd/admin/';</script>";
     $_SESSION['T'] = $validasi." - ".$nim_mhs;
   }
 ?>
@@ -59,7 +59,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Admin FKIP | Dashboard</title>
-  <link rel="shortcut icon" href="https://ttd-fisipuntad.rf.gd/login-form/untad.png" type="image/x-icon">
+  <link rel="shortcut icon" href="http://ttd-fisipuntad.rf.gd/login-form/untad.png" type="image/x-icon">
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -75,7 +75,7 @@
 <body class="hold-transition sidebar-mini layout-fixed">
 <!-- PHP Code -->
   <?php
-    include "../connect.php";
+    require "../connect.php";
 
     $q_mhs  = mysqli_query($db, "SELECT biodata.nama,biodata.nim,skripsi.judul,skripsi.validasi,skripsi.doc FROM biodata,skripsi WHERE biodata.nim=skripsi.nim");
   ?>
@@ -84,7 +84,7 @@
 
   <!-- Preloader -->
   <div class="preloader flex-column justify-content-center align-items-center">
-    <img class="animation__shake" src="https://ttd-fisipuntad.rf.gd/login-form/untad.png" alt="AdminLTELogo" height="60" width="60">
+    <img class="animation__shake" src="http://ttd-fisipuntad.rf.gd/login-form/untad.png" alt="AdminLTELogo" height="60" width="60">
   </div>
 
   <!-- Navbar -->
@@ -135,7 +135,7 @@
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link">
+    <a href="index.php" class="brand-link">
       <img src="../login-form/untad.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
       <span class="brand-text font-weight-light">FKIP UNTAD</span>
     </a>
@@ -292,7 +292,7 @@
                       <?php
                         while($d_mhs  = mysqli_fetch_array($q_mhs)){
                       ?>                      
-                      <tr>
+                      <tr style="text-transform: uppercase;">
                         <td><?= $d_mhs['nama'];?></td>
                         <td><?= $d_mhs['nim'];?></td>
                         <td><a href="../<?= $d_mhs['doc'];?>"><?= $d_mhs['judul'];?></a></td>                         

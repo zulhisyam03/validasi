@@ -16,7 +16,7 @@
     $mpdf->img_dpi = 96;
     $mpdf->imageVars['myvariable'] = file_get_contents('header.png');
 */
-    include "../connect.php";
+    require "../connect.php";
 
     $nim_mhs    = $_GET['nim'];
 
